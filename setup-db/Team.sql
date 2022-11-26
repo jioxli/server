@@ -10,4 +10,4 @@ CREATE TABLE team(
     GD15 INT
 );
 
-\copy team(tid, name, games, wins, losses, fDragon, fTurret, FHerald, GD15) FROM 'C:\Users\imo20\OneDrive\Documents\Team_Stats_final.csv' DELIMITER ',' CSV;
+\copy team(tid, name, games, wins, losses, fDragon, fTurret, fHerald, GD15) FROM 'C:\Users\imo20\OneDrive\Documents\Team_Stats_final.csv' DELIMITER ',' CSV;
