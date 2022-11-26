@@ -92,7 +92,7 @@ app.post("/players", async(req, res) => {
         const kda = body["kda"];
         const kp = body["kp"];
         const GD10 = body["GD10"];
-
+        console.log(body);
         const newPlayer = await pool.query(
             "INSERT INTO player (ign, tid, team, position, kda, kp, GD10) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *",
             [ign, tid, team, position, kda, kp, GD10]);
@@ -126,11 +126,12 @@ app.post("/games", async(req, res) => {
         const xpdiffat15 = body["xpdiffat15"];
         const gamelength = body["gamelength"];
         
+        console.log(body);
         const newGame = await pool.query(
             "INSERT INTO game (gid, date, pid, playername, tid, teamname, side, position, champion, " +
             "result, kills, deaths, assists, firstdragon, firstherald, firsttower, golddiffat15, " +
             "xpdiffat15, gamelength) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, " +
-            "$14, $15, $16, $17, $18, $19",
+            "$14, $15, $16, $17, $18, $19) RETURNING *",
             [gid, date, pid, playername, tid, teamname, side, position, champion, result, kills,
                 deaths, assists, firstdragon, firstherald, firsttower, golddiffat15, xpdiffat15,
                 gamelength]);
