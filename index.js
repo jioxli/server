@@ -80,6 +80,28 @@ app.post("/teams", async(req, res) => {
     }
 });
 
+// add a player
+app.post("/players", async(req, res) => {
+    try {
+        console.log("post player");
+        const body = req.body;
+        const ign = body["ign"];
+        const tid = body["tid"];
+        const team = body["team"];
+        const position = body["position"];
+        const kda = body["kda"];
+        const kp = body["kp"];
+        const GD10 = body["GD10"];
+
+        const newPlayer = await.pool.query(
+            "INSERT INTO player (ign, tid, team, position, kda, kp, GD10) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *",
+            [ign, tid, team, position, kda, kp, GD10]);
+        res.json(newPlayer.rows[0]);
+    } catch(err) {
+        console.error(err.message);
+    }
+});
+
 app.listen(5000, () => {
     console.log("Server has started on port 5000");
 });
