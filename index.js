@@ -83,7 +83,6 @@ app.post("/teams", async(req, res) => {
 // add a player
 app.post("/players", async(req, res) => {
     try {
-        console.log("post player");
         const body = req.body;
         const ign = body["ign"];
         const tid = body["tid"];
@@ -97,6 +96,44 @@ app.post("/players", async(req, res) => {
             "INSERT INTO player (ign, tid, team, position, kda, kp, GD10) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *",
             [ign, tid, team, position, kda, kp, GD10]);
         res.json(newPlayer.rows[0]);
+    } catch(err) {
+        console.error(err.message);
+    }
+});
+
+// add a game
+app.post("/games", async(req, res) => {
+    try {
+        const body = req.body;
+        const gid = body["gid"];
+        const date = body["date"];
+        const pid = body["pid"];
+        const playername = body["playername"];
+        const tid = body["tid"];
+        const teamname = body["teamname"];
+        const side = body["side"];
+        const position = body["position"];
+        const champion = body["champion"];
+        const result = body["result"];
+        const kills = body["kills"];
+        const deaths = body["deaths"];
+        const assists = body["assists"];
+        const firstdragon = body["firstdragon"];
+        const firstherald = body["firstherald"];
+        const firsttower = body["firsttower"];
+        const golddiffat15 = body["golddiffat15"];
+        const xpdiffat15 = body["xpdiffat15"];
+        const gamelength = body["gamelength"];
+        
+        const newGame = await.pool.query(
+            "INSERT INTO game (gid, date, pid, playername, tid, teamname, side, position, champion, " +
+            "result, kills, deaths, assists, firstdragon, firstherald, firsttower, golddiffat15, " +
+            "xpdiffat15, gamelength) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, " +
+            "$14, $15, $16, $17, $18, $19",
+            [gid, date, pid, playername, tid, teamname, side, position, champion, result, kills,
+                deaths, assists, firstdragon, firstherald, firsttower, golddiffat15, xpdiffat15,
+                gamelength]);
+        res.json(newGame.rows[0]);
     } catch(err) {
         console.error(err.message);
     }
