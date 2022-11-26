@@ -60,6 +60,7 @@ app.get("/accounts", async(req, res) => {
 // add a team
 app.post("/teams", async(req, res) => {
     try {
+        console.log("post teams");
         //const { body } = req.body;
         const body = req.body;
         const name = body["name"];
@@ -70,11 +71,11 @@ app.post("/teams", async(req, res) => {
         const fTurret = body["fTurret"];
         const fHerald = body["fHerald"];
         const GD15 = body["GD15"];
-
         const newTeam = await pool.query(
             "INSERT INTO team (name, games, wins, losses, fDragon, fTurret, fHerald, GD15) VALUES($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *",
            [name, games, wins, losses, fDragon, fTurret, fHerald, GD15]); 
         res.json(newTeam.rows[0]);
+        console.log(body);
     } catch(err) {
         console.error(err.message);
     }
@@ -92,7 +93,7 @@ app.post("/players", async(req, res) => {
         const kp = body["kp"];
         const GD10 = body["GD10"];
 
-        const newPlayer = await.pool.query(
+        const newPlayer = await pool.query(
             "INSERT INTO player (ign, tid, team, position, kda, kp, GD10) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *",
             [ign, tid, team, position, kda, kp, GD10]);
         res.json(newPlayer.rows[0]);
@@ -125,7 +126,7 @@ app.post("/games", async(req, res) => {
         const xpdiffat15 = body["xpdiffat15"];
         const gamelength = body["gamelength"];
         
-        const newGame = await.pool.query(
+        const newGame = await pool.query(
             "INSERT INTO game (gid, date, pid, playername, tid, teamname, side, position, champion, " +
             "result, kills, deaths, assists, firstdragon, firstherald, firsttower, golddiffat15, " +
             "xpdiffat15, gamelength) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, " +
