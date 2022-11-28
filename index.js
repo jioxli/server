@@ -35,6 +35,21 @@ app.get("/games", async(req, res) => {
     }
 });
 
+// get games of a specific player
+app.get("/games/ign/:ign", async(req, res) => {
+    try {
+        const { ign } = req.params;
+        console.log("getting games of player " + ign);
+        const games = await pool.query(
+            "SELECT *  FROM game WHERE\n" + 
+            "playername = $1",
+            [ign]);
+        res.json(games.rows);
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
 // get all players
 app.get("/players", async(req, res) => {
     try {
