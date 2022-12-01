@@ -32,15 +32,13 @@ app.get("/games", async(req, res) => {
 
         // get property and value from URL string
         for(const prop in req.query){
-            console.log(prop);
-            console.log(req.query[prop]);
         }
 
         // get column names
         const columnNames = await pool.query(
             "SELECT * FROM information_schema.columns WHERE table_name = 'game' ");
         for(let i = 0; i < columnNames.rowCount; i++){
-            console.log(columnNames.rows[i].column_name);
+            //console.log(columnNames.rows[i].column_name);
         }
 
         
