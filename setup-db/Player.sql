@@ -10,6 +10,4 @@ CREATE TABLE player(
     FOREIGN KEY (tid) REFERENCES team
 );
 
-\copy player(pid, ign, tid, team, position, kda, kp, GD10) FROM 'C:\Users\imo20\OneDrive\Documents\Player_Stats_final.csv' DELIMITER ',' CSV;
-
 
