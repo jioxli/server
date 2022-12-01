@@ -23,4 +23,3 @@ CREATE TABLE game(
     FOREIGN KEY (pid) REFERENCES player
 );
 
-\copy game(id,gid,date,pid,playername,tid,teamname,side,position,champion,result,kills,deaths,assists,firstdragon,firstherald,firsttower,golddiffat15,xpdiffat15,gamelength) FROM 'C:\Users\imo20\OneDrive\Documents\Game_Stats_new.csv' DELIMITER ',' CSV HEADER;
