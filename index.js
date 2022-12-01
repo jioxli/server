@@ -28,6 +28,22 @@ app.get("/teams", async(req, res) => {
 app.get("/games", async(req, res) => {
     try {
         console.log("games!");
+        console.log(req.query);
+
+        // get property and value from URL string
+        for(const prop in req.query){
+            console.log(prop);
+            console.log(req.query[prop]);
+        }
+
+        // get column names
+        const columnNames = await pool.query(
+            "SELECT * FROM information_schema.columns WHERE table_name = 'game' ");
+        for(let i = 0; i < columnNames.rowCount; i++){
+            console.log(columnNames.rows[i].column_name);
+        }
+
+        
         const allGames = await pool.query("SELECT * FROM game");
         res.json(allGames.rows);
     } catch (err) {
@@ -86,9 +102,10 @@ app.post("/teams", async(req, res) => {
         const fTurret = body["fTurret"];
         const fHerald = body["fHerald"];
         const GD15 = body["GD15"];
+        const winRate = wins/games;
         const newTeam = await pool.query(
-            "INSERT INTO team (name, games, wins, losses, fDragon, fTurret, fHerald, GD15) VALUES($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *",
-           [name, games, wins, losses, fDragon, fTurret, fHerald, GD15]); 
+            "INSERT INTO team (name, games, wins, losses, fDragon, fTurret, fHerald, GD15, winrate) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *",
+           [name, games, wins, losses, fDragon, fTurret, fHerald, GD15, winRate]); 
         res.json(newTeam.rows[0]);
         console.log(body);
     } catch(err) {
